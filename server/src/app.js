@@ -9,3 +9,4 @@ app.get('/', (req, res) => {
 });
 
 module.exports = app;
+require('./config/db');
