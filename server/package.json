@@ -4,8 +4,8 @@
   "description": "Веб-сервис для продажи автомобилей",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -24,7 +24,8 @@
     "express-validator": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "multer": "^2.0.2",
-    "mysql2": "^3.15.3"
+    "mysql2": "^3.15.3",
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
