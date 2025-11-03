@@ -5,33 +5,36 @@ const { User } = require('../models'); // Импортируем модель Us
 // Регистрация пользователя
 exports.register = async (req, res) => {
     try {
+        console.log('📝 Регистрация:', req.body);
+        
         const { email, password, name, phone } = req.body;
 
-        // Проверяем существует ли пользователь
         const existingUser = await User.findOne({ where: { email } });
+        console.log('🔍 Поиск пользователя:', existingUser ? 'найден' : 'не найден');
+        
         if (existingUser) {
             return res.status(400).json({ 
                 error: 'Пользователь с таким email уже существует' 
             });
         }
 
-        // Хешируем пароль
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('🔐 Пароль захэширован');
 
-        // Создаем пользователя
         const user = await User.create({
             email,
             password: hashedPassword,
             name,
             phone
         });
+        console.log('✅ Пользователь создан в БД:', user.id);
 
-        // Создаем JWT токен
         const token = jwt.sign(
             { userId: user.id }, 
             process.env.JWT_SECRET,
-            { expiresIn: '24h' }
-        );
+            { expiresIn: '24h'
+        });
+        console.log('🎫 JWT токен создан');
 
         res.status(201).json({
             message: 'Пользователь успешно зарегистрирован',
@@ -39,13 +42,14 @@ exports.register = async (req, res) => {
             user: {
                 id: user.id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                phone: user.phone
             }
         });
 
     } catch (error) {
-        console.error('Registration error:', error);
-        res.status(500).json({ error: 'Ошибка при регистрации' });
+        console.error('❌ Registration error:', error);
+        res.status(500).json({ error: 'Ошибка при регистрации: ' + error.message });
     }
 };
 
@@ -109,4 +113,9 @@ exports.getMe = async (req, res) => {
         console.error('Get me error:', error);
         res.status(500).json({ error: 'Ошибка при получении данных' });
     }
+};
+
+exports.logout = (req, res) => {
+    // В JWT выход реализуется на клиенте - удалением токена
+    res.json({ message: 'Выход выполнен успешно' });
 };

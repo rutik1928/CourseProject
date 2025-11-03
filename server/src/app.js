@@ -1,19 +1,22 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
+// Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../../client/src')));
 
-// Базовый тестовый маршрут
+// Маршруты
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/ads', require('./routes/ads'));
+app.use('/api/comments', require('./routes/comments'));
+
+// Главная страница
 app.get('/', (req, res) => {
-    res.send('Сервер работает ✅');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Обработка ошибок
+app.use(require('./middleware/errorHandler'));
+
 module.exports = app;
-require('./config/db');
-
-const sequelize = require('./config/db');
-require('./models'); // Подключаем модели и связи
-
-sequelize.sync({ alter: true }) // Создаёт таблицы автоматически
-    .then(() => console.log("📌 Таблицы синхронизированы"))
-    .catch(err => console.error("❌ Ошибка синхронизации:", err));

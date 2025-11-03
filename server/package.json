@@ -12,9 +12,9 @@
     "cars",
     "ads",
     "express",
-    "mongodb"
+    "mysql"
   ],
-  "author": "Твое имя",
+  "author": "rutik",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
