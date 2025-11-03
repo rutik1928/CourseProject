@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Ads - Тест API</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 600px; 
+            margin: 50px auto; 
+            padding: 20px; 
+        }
+        .container { 
+            border: 1px solid #ddd; 
+            padding: 20px; 
+            border-radius: 8px; 
+        }
+        .form-group { 
+            margin: 10px 0; 
+        }
+        input, button { 
+            padding: 10px; 
+            margin: 5px; 
+            width: 200px; 
+        }
+        button { 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            width: auto;
+        }
+        button:hover { 
+            background: #0056b3; 
+        }
+        .result { 
+            background: #f5f5f5; 
+            padding: 10px; 
+            margin-top: 10px; 
+            border-radius: 4px; 
+            white-space: pre-wrap;
+        }
+        .tab { 
+            margin: 10px 0; 
+        }
+        .tab-button { 
+            padding: 8px 16px; 
+            margin-right: 5px; 
+            cursor: pointer; 
+        }
+        .tab-content { 
+            display: none; 
+        }
+        .active { 
+            background: #007bff; 
+            color: white; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Car Ads - Тест API</h1>
+        
+        <div class="tab">
+            <button class="tab-button active" onclick="openTab('register')">Регистрация</button>
+            <button class="tab-button" onclick="openTab('login')">Вход</button>
+            <button class="tab-button" onclick="openTab('profile')">Профиль</button>
+        </div>
+
+        <!-- Регистрация -->
+        <div id="register" class="tab-content" style="display: block;">
+            <h3>Регистрация</h3>
+            <div class="form-group">
+                <input type="email" id="regEmail" placeholder="Email" value="test@example.com">
+            </div>
+            <div class="form-group">
+                <input type="password" id="regPassword" placeholder="Пароль" value="123456">
+            </div>
+            <div class="form-group">
+                <input type="text" id="regName" placeholder="Имя" value="Тестовый Пользователь">
+            </div>
+            <div class="form-group">
+                <input type="text" id="regPhone" placeholder="Телефон" value="+79991234567">
+            </div>
+            <button onclick="register()">Зарегистрироваться</button>
+        </div>
+
+        <!-- Вход -->
+        <div id="login" class="tab-content">
+            <h3>Вход</h3>
+            <div class="form-group">
+                <input type="email" id="loginEmail" placeholder="Email" value="test@example.com">
+            </div>
+            <div class="form-group">
+                <input type="password" id="loginPassword" placeholder="Пароль" value="123456">
+            </div>
+            <button onclick="login()">Войти</button>
+        </div>
+
+        <!-- Профиль -->
+        <div id="profile" class="tab-content">
+            <h3>Профиль</h3>
+            <button onclick="getProfile()">Получить мой профиль</button>
+            <button onclick="logout()">Выйти</button>
+        </div>
+
+        <div id="result" class="result"></div>
+        
+        <div style="margin-top: 20px;">
+            <h4>📋 Инструкция:</h4>
+            <ol>
+                <li>Зарегистрируй нового пользователя</li>
+                <li>Войди с этими данными</li>
+                <li>Получи профиль (нужен токен)</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        let currentToken = localStorage.getItem('token');
+        
+        // Функции для работы с вкладками
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName).style.display = 'block';
+            event.currentTarget.classList.add('active');
+        }
+
+        // Общая функция для API запросов
+        async function apiRequest(url, options = {}) {
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                });
+                
+                const data = await response.json();
+                return { success: response.ok, data, status: response.status };
+            } catch (error) {
+                return { success: false, data: { error: 'Ошибка сети' } };
+            }
+        }
+
+        // Регистрация
+        async function register() {
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const name = document.getElementById('regName').value;
+            const phone = document.getElementById('regPhone').value;
+
+            showResult('⏳ Регистрируем...');
+
+            const result = await apiRequest('/api/auth/register', {
+                method: 'POST',
+                body: JSON.stringify({ email, password, name, phone })
+            });
+
+            if (result.success) {
+                currentToken = result.data.token;
+                localStorage.setItem('token', currentToken);
+                showResult('✅ Регистрация успешна!\nТокен сохранен в localStorage\n\nДанные пользователя:\n' + 
+                          JSON.stringify(result.data.user, null, 2));
+                console.log('Token:', currentToken);
+            } else {
+                showResult('❌ Ошибка: ' + result.data.error);
+            }
+        }
+
+        // Вход
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            showResult('⏳ Входим...');
+
+            const result = await apiRequest('/api/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({ email, password })
+            });
+
+            if (result.success) {
+                currentToken = result.data.token;
+                localStorage.setItem('token', currentToken);
+                showResult('✅ Вход успешен!\nТокен сохранен\n\nДанные пользователя:\n' + 
+                          JSON.stringify(result.data.user, null, 2));
+                console.log('Token:', currentToken);
+            } else {
+                showResult('❌ Ошибка: ' + result.data.error);
+            }
+        }
+
+        // Получение профиля
+        async function getProfile() {
+            if (!currentToken) {
+                showResult('❌ Сначала войдите в систему');
+                return;
+            }
+
+            showResult('⏳ Загружаем профиль...');
+
+            const result = await apiRequest('/api/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${currentToken}`
+                }
+            });
+
+            if (result.success) {
+                showResult('✅ Профиль загружен:\n' + JSON.stringify(result.data.user, null, 2));
+                console.log('User:', result.data.user);
+            } else {
+                showResult('❌ Ошибка: ' + result.data.error);
+            }
+        }
+
+        // Выход
+        function logout() {
+            currentToken = null;
+            localStorage.removeItem('token');
+            showResult('✅ Выход выполнен. Токен удален.');
+        }
+
+        // Показать результат
+        function showResult(message) {
+            document.getElementById('result').textContent = message;
+        }
+
+        // Проверка при загрузке
+        if (currentToken) {
+            showResult('🔑 Токен найден в localStorage. Можете получить профиль.');
+        }
+    </script>
+</body>
+</html>
