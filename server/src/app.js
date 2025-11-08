@@ -5,11 +5,6 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// Главная страница
-app.get('/', (req, res) => {
-    res.redirect('/login.html');
-});
-
 app.use(express.static(path.join(__dirname, '..', '..', 'client')));
 
 // Маршруты
