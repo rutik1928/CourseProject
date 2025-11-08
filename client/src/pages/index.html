@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автомобильные объявления</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header-right {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+        .profile-menu {
+            display: flex;
+            align-items: center;
+        }
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .profile-link:hover {
+            background-color: #0056b3;
+        }
+        .menu-toggle {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            z-index: 1001;
+        }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        nav {
+            background-color: #0056b3;
+            padding: 0.5rem 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .hero-section {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .hero-section h2 {
+            color: #007bff;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        .hero-section p {
+            font-size: 1.1em;
+            color: #555;
+        }
+        .ad-listings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .ad-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        .ad-card:hover {
+            transform: translateY(-5px);
+        }
+        .ad-card h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        .ad-card p {
+            font-size: 0.9em;
+            color: #666;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background-color: #343a40;
+            color: white;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn">&times;</a>
+        <a href="/">Главная</a>
+        <a href="/login.html">Войти</a>
+        <a href="/register.html">Регистрация</a>
+        <a href="/create-ad.html">Разместить объявление</a>
+        <a href="/create-car.html">Добавить автомобиль</a>
+        <a href="/cars.html">Просмотр автомобилей</a>
+    </div>
+
+    <header>
+        <button id="menu-toggle" class="menu-toggle">☰</button>
+        <nav>
+        <h1>Автомобильные объявления</h1>
+        <div class="header-right">
+            <div id="profile-menu" class="profile-menu">
+                <a href="/login.html" id="login-link" class="profile-link">Войти</a>
+                <a href="/profile.html" id="profile-link" class="profile-link" style="display:none;">Профиль</a>
+                <a href="#" id="logoutButton" class="profile-link" style="display:none;">Выйти</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="hero-section">
+            <h2>Найдите свой идеальный автомобиль!</h2>
+            <p>Тысячи объявлений о продаже автомобилей от частных лиц и дилеров.</p>
+            <p>Легко и быстро продавайте свой автомобиль.</p>
+        </section>
+
+        <h2>Последние объявления</h2>
+        <div class="ad-listings">
+            <!-- Здесь будут динамически загружаться объявления -->
+            <div class="ad-card">
+                <h3>Объявление 1</h3>
+                <p>Марка: Toyota Camry</p>
+                <p>Год: 2018</p>
+                <p>Цена: 1 500 000 руб.</p>
+            </div>
+            <div class="ad-card">
+                <h3>Объявление 2</h3>
+                <p>Марка: BMW X5</p>
+                <p>Год: 2020</p>
+                <p>Цена: 4 200 000 руб.</p>
+            </div>
+            <div class="ad-card">
+                <h3>Объявление 3</h3>
+                <p>Марка: Lada Granta</p>
+                <p>Год: 2022</p>
+                <p>Цена: 800 000 руб.</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Автомобильные объявления. Все права защищены.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+             const loginLink = document.getElementById('login-link');
+             const profileLink = document.getElementById('profile-link');
+             const logoutButton = document.getElementById('logoutButton');
+             const sidebarCreateAdLink = document.querySelector('#sidebar a[href="/create-ad.html"]');
+             const sidebarCarsLink = document.querySelector('#sidebar a[href="/cars.html"]');
+
+             if (token) {
+                 loginLink.style.display = 'none';
+                 profileLink.style.display = 'block';
+                 logoutButton.style.display = 'block';
+                 if (sidebarCreateAdLink) {
+                     sidebarCreateAdLink.style.display = 'block';
+                 }
+                 if (sidebarCarsLink) {
+                     sidebarCarsLink.style.display = 'block';
+                 }
+             } else {
+                 loginLink.style.display = 'block';
+                 profileLink.style.display = 'none';
+                 logoutButton.style.display = 'none';
+                 if (sidebarCreateAdLink) {
+                     sidebarCreateAdLink.style.display = 'none';
+                 }
+                 if (sidebarCarsLink) {
+                     sidebarCarsLink.style.display = 'none';
+                 }
+                 // Redirect to login only if not already on login page
+                 if (window.location.pathname !== '/login.html' && window.location.pathname !== '/register.html') {
+                     window.location.href = '/login.html';
+                 }
+             }
+
+             const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeBtn = document.querySelector('.closebtn');
+
+            menuToggle.addEventListener('click', () => {
+                sidebar.style.width = '250px';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                sidebar.style.width = '0';
+            });
+         });
+     </script>
+ </body>
+</html>

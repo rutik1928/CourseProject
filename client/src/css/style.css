@@ -1,0 +1,38 @@
+/* Basic styles for the CarAds application */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.ad-details {
+    margin-top: 20px;
+}
+
+.ad-details h2 {
+    margin-bottom: 15px;
+}
+
+.ad-details p {
+    margin-bottom: 10px;
+}
+
+.ad-details .btn {
+    margin-right: 10px;
+}

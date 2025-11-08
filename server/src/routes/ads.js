@@ -1,18 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const adController = require('../controllers/adController');
+const auth = require('../middleware/auth');
 
-// Временные заглушки - потом заменим на настоящую логику
-router.get('/', (req, res) => {
-    res.json({ 
-        message: 'Endpoint для объявлений - будет реализован в Этапе 3',
-        planned_endpoints: [
-            'GET /api/ads - все объявления',
-            'POST /api/ads - создать объявление', 
-            'GET /api/ads/:id - одно объявление',
-            'PUT /api/ads/:id - обновить объявление',
-            'DELETE /api/ads/:id - удалить объявление'
-        ]
-    });
-});
+// Получить все объявления
+router.get('/', adController.getAllAds);
+
+// Создать объявление (требуется авторизация)
+router.post('/', auth, adController.createAd);
+
+// Получить объявление по id
+router.get('/:id', adController.getAdById);
+
+// Обновить объявление (требуется авторизация)
+router.put('/:id', auth, adController.updateAd);
+
+// Удалить объявление (требуется авторизация)
+router.delete('/:id', auth, adController.deleteAd);
 
 module.exports = router;
