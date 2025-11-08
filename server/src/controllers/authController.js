@@ -4,54 +4,36 @@ const { User } = require('../models'); // Импортируем модель Us
 
 // Регистрация пользователя
 exports.register = async (req, res) => {
-    try {
-        console.log('📝 Регистрация:', req.body);
-        
-        const { email, password, name, phone } = req.body;
+  try {
+    console.log('Register function called');
+    const { name, email, password, phone } = req.body;
 
-        const existingUser = await User.findOne({ where: { email } });
-        console.log('🔍 Поиск пользователя:', existingUser ? 'найден' : 'не найден');
-        
-        if (existingUser) {
-            return res.status(400).json({ 
-                error: 'Пользователь с таким email уже существует' 
-            });
-        }
+    console.log('Request body:', { name, email, password, phone });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        console.log('🔐 Пароль захэширован');
-
-        const user = await User.create({
-            email,
-            password: hashedPassword,
-            name,
-            phone
-        });
-        console.log('✅ Пользователь создан в БД:', user.id);
-
-        const token = jwt.sign(
-            { userId: user.id }, 
-            process.env.JWT_SECRET,
-            { expiresIn: '24h'
-        });
-        console.log('🎫 JWT токен создан');
-
-        res.status(201).json({
-            message: 'Пользователь успешно зарегистрирован',
-            token,
-            user: {
-                id: user.id,
-                email: user.email,
-                name: user.name,
-                role: user.role
-            },
-            redirectUrl: '/' // Перенаправление на главную страницу
-        });
-
-    } catch (error) {
-        console.error('❌ Registration error:', error);
-        res.status(500).json({ error: 'Ошибка при регистрации: ' + error.message });
+    if (!name || !email || !password || !phone) {
+      console.log('Missing fields');
+      return res.status(400).json({ message: 'Please enter all required fields' });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('Password hashed');
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      phone
+    });
+    console.log('User inserted into database, user:', user);
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log('JWT token generated');
+
+    res.status(201).json({ message: 'User registered successfully', token, redirectUrl: '/' });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ message: 'Registration error', error: error.message });
+  }
 };
 
 // Вход пользователя
