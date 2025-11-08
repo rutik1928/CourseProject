@@ -43,8 +43,9 @@ exports.register = async (req, res) => {
                 id: user.id,
                 email: user.email,
                 name: user.name,
-                phone: user.phone
-            }
+                role: user.role
+            },
+            redirectUrl: '/' // Перенаправление на главную страницу
         });
 
     } catch (error) {
@@ -87,8 +88,10 @@ exports.login = async (req, res) => {
             user: {
                 id: user.id,
                 email: user.email,
-                name: user.name
-            }
+                name: user.name,
+                role: user.role
+            },
+            redirectUrl: '/' // Перенаправление на главную страницу
         });
 
     } catch (error) {
