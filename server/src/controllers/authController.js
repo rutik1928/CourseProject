@@ -86,17 +86,15 @@ exports.login = async (req, res) => {
 exports.getMe = async (req, res) => {
     try {
         const user = await User.findByPk(req.userId, {
-            attributes: { exclude: ['password'] }
+            attributes: ['id', 'email', 'name', 'phone', 'role', 'created_at']
         });
-        
         if (!user) {
-            return res.status(404).json({ error: 'Пользователь не найден' });
+            return res.status(404).json({ message: 'Пользователь не найден' });
         }
-
-        res.json({ user });
+        res.json(user);
     } catch (error) {
-        console.error('Get me error:', error);
-        res.status(500).json({ error: 'Ошибка при получении данных' });
+        console.error('Ошибка при получении данных пользователя:', error);
+        res.status(500).json({ message: 'Ошибка сервера' });
     }
 };
 

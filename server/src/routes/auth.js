@@ -14,6 +14,9 @@ router.post('/login', validateLogin, authController.login);
 // Получение данных текущего пользователя (требует авторизации)
 router.get('/me', auth, authController.getMe);
 
+// Получение данных профиля пользователя (требует авторизации)
+router.get('/profile', auth, authController.getMe);
+
 module.exports = router;
 
 router.post('/logout', auth, authController.logout);
