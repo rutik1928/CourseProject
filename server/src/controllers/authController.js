@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
 // Получение информации о текущем пользователе
 exports.getMe = async (req, res) => {
     try {
-        const user = await User.findByPk(req.userId, {
+        const user = await User.findByPk(req.user.userId, {
             attributes: ['id', 'email', 'name', 'phone', 'role', 'created_at']
         });
         if (!user) {

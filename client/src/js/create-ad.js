@@ -126,12 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 messageDiv.className = 'alert alert-success';
-                messageDiv.textContent = 'Объявление успешно создано!';
+                messageDiv.textContent = 'Объявление успешно создано! Вы будете перенаправлены на главную страницу.';
                 createAdForm.reset();
                 selectedCarIdInput.value = ''; // Clear selected car
                 selectedCarDisplay.textContent = '';
                 selectedCar = null;
-                window.location.href = '/profile.html';
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 3000); // Redirect to main page after 3 seconds
             } else {
                 messageDiv.className = 'alert alert-danger';
                 messageDiv.textContent = data.message || 'Ошибка при создании объявления.';

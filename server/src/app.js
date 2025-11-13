@@ -30,12 +30,22 @@ app.get('/create-car.html', (req, res) => {
 app.get('/cars.html', (req, res) => {
     res.sendFile(path.join(__dirname, '..', '..', 'client', 'src', 'pages', 'cars.html'));
 });
+app.get('/ad-details.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client', 'src', 'pages', 'ad-details.html'));
+});
+app.get('/my-ads.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client', 'src', 'pages', 'my-ads.html'));
+});
+app.get('/moderation.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client', 'src', 'pages', 'moderation.html'));
+});
 
 // Маршруты
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/ads', require('./routes/ads'));
 app.use('/api/cars', require('./routes/cars'));
 app.use('/api/comments', require('./routes/comments'));
+app.use('/api/admin', require('./routes/admin'));
 
 // Обработка ошибок
 app.use(require('./middleware/errorHandler'));

@@ -1,38 +1,317 @@
 /* Basic styles for the CarAds application */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
 }
 
-.navbar-brand {
+.main-content {
+    margin-left: 0; /* Adjust this based on sidebar state */
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+}
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+.header-right {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.profile-menu {
+    display: flex;
+    align-items: center;
+}
+.profile-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.profile-link:hover {
+    background-color: #0056b3;
+}
+.menu-toggle {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.5em;
+    cursor: pointer;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 1001;
+}
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+nav {
+    background-color: #0056b3;
+    padding: 0.5rem 0;
+    text-align: center;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0 15px;
     font-weight: bold;
 }
+nav a:hover {
+    text-decoration: underline;
+}
 
+/* Moderation page styles */
+.moderation-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.moderation-actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.moderation-actions .approve-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.moderation-actions .approve-btn:hover {
+    background-color: #218838;
+}
+
+.moderation-actions .reject-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.moderation-actions .reject-btn:hover {
+    background-color: #c82333;
+}
 .container {
-    margin-top: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.hero-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+.hero-section h2 {
+    color: #007bff;
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+.hero-section p {
+    font-size: 1.1em;
+    color: #555;
+}
+.ad-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.ad-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    display: flex; /* Added for flexbox layout */
+    text-align: left; /* Left-align text within the card */
+    text-decoration: none; /* Remove underline */
+    width: 100%; /* Make ad cards take full width */
+}
+.ad-card:hover {
+    transform: translateY(-5px);
+}
+.ad-card h3 {
+    margin-top: 0;
+    color: #333;
+}
+.ad-card p {
+    color: #666;
+    font-size: 14px;
+}
+.ad-card a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+.ad-card a:hover {
+    text-decoration: underline;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background-color: #343a40;
+    color: white;
+    font-size: 0.9em;
 }
 
-.card {
+/* New styles for ad card layout */
+.ad-card-image-placeholder {
+    flex: 0 0 120px; /* Fixed width for image placeholder */
+    height: 100px; /* Rectangular height */
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    color: #6c757d;
+    border-right: 1px solid #dee2e6; /* Right border */
+    margin-right: 15px;
+}
+
+.ad-card-details {
+    flex-grow: 1;
+    text-align: left; /* Ensure text is left-aligned */
+}
+
+.ad-card-details h3 {
+    margin-bottom: 5px;
+}
+
+.ad-card-details p {
+    margin-bottom: 3px;
+}
+
+.ad-card-details .ad-price {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* Ad details specific styles */
+.ad-image-placeholder {
+    width: 100%;
+    height: 300px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #666;
+    border: 1px solid #ccc;
 }
 
-.card-img-top {
-    height: 200px;
-    object-fit: cover;
+#ad-title {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+    color: #333;
 }
 
-.ad-details {
-    margin-top: 20px;
-}
-
-.ad-details h2 {
+#ad-creation-date {
+    font-size: 0.9em;
+    color: #777;
     margin-bottom: 15px;
 }
 
-.ad-details p {
-    margin-bottom: 10px;
+#car-make-model-generation {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    color: #555;
 }
 
-.ad-details .btn {
-    margin-right: 10px;
+#car-year {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#ad-details-content p {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+#ad-details-content strong {
+    color: #333;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.filter-btn.active {
+    background-color: #007bff;
+    color: white;
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои объявления</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn">&times;</a>
+        <a href="/index.html">Главная</a>
+        <a href="/login.html">Войти</a>
+        <a href="/register.html">Регистрация</a>
+        <a href="/create-ad.html" id="sidebar-create-ad-link">Разместить объявление</a>
+        <a href="/create-car.html">Добавить автомобиль</a>
+        <a href="/moderation.html" id="sidebar-moderation-link" style="display: none;">Модерация объявлений</a>
+    </div>
+
+    <header>
+        <button id="menu-toggle" class="menu-toggle">☰</button>
+        <h1>Мои объявления</h1>
+        <div class="header-right">
+            <div class="profile-menu">
+                <a href="/profile.html" class="profile-link" id="profile-link" style="display: none;">Профиль</a>
+                <a href="#" class="profile-link" id="logoutButton" style="display: none;">Выйти</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="my-ads-section">
+            <h2>Мои объявления</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn" data-status="approved">Одобренные (<span id="approved-count">0</span>)</button>
+            <button class="filter-btn" data-status="pending">На модерации (<span id="pending-count">0</span>)</button>
+            <button class="filter-btn" data-status="rejected">Отклоненные (<span id="rejected-count">0</span>)</button>
+            </div>
+            <div id="user-ads-list" class="ad-list">
+                <!-- Объявления пользователя будут загружены сюда -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Автомобильные объявления. Все права защищены.</p>
+    </footer>
+
+    <script src="../js/my-ads.js"></script>
+    <script src="../js/common.js"></script>
+</body>
+</html>

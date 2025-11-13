@@ -101,6 +101,34 @@
             border-radius: 8px;
             margin-bottom: 30px;
         }
+        #logout-btn {
+            background-color: #dc3545; /* Красный цвет */
+            color: white;
+            margin-top: 50px; /* Отступ снизу */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        #logout-btn:hover {
+            background-color: #c82333;
+        }
+        #my-ads-btn {
+            background-color: #28a745; /* Яркий зеленый */
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px; /* Отступ от кнопки выхода */
+            transition: background-color 0.3s ease;
+        }
+        #my-ads-btn:hover {
+            background-color: #218838;
+        }
         footer {
             text-align: center;
             padding: 20px;
@@ -119,6 +147,7 @@
         <a href="/register.html">Регистрация</a>
         <a href="/create-ad.html" id="sidebar-create-ad-link">Разместить объявление</a>
         <a href="/create-car.html">Добавить автомобиль</a>
+        <a href="/moderation.html" id="sidebar-moderation-link" style="display: none;">Модерация объявлений</a>
     </div>
 
     <header>
@@ -137,8 +166,10 @@
             <div id="user-info">
                 <p><strong>Имя:</strong> <span id="user-name"></span></p>
                 <p><strong>Email:</strong> <span id="user-email"></span></p>
-                <!-- Добавьте другие поля информации о пользователе здесь -->
+                <p><strong>Телефон:</strong> <span id="user-phone"></span></p>
+                <p><strong>Дата регистрации:</strong> <span id="user-created-at"></span></p>
             </div>
+            <button id="my-ads-btn" class="profile-link">Мои объявления</button>
             <button id="logout-btn" class="profile-link">Выйти из аккаунта</button>
         </section>
     </div>
@@ -182,7 +213,8 @@
                 if (data) {
                     document.getElementById('user-name').textContent = data.name;
                     document.getElementById('user-email').textContent = data.email;
-                    // Populate other user info fields here
+                    document.getElementById('user-phone').textContent = data.phone;
+                    document.getElementById('user-created-at').textContent = new Date(data.created_at).toLocaleDateString();
                 } else {
                     console.error('Failed to fetch user profile:', data.message);
                     // Optionally redirect to login or show an error message
@@ -191,6 +223,11 @@
             .catch(error => {
                 console.error('Error fetching user profile:', error);
                 // Optionally redirect to login or show an error message
+            });
+
+            const myAdsBtn = document.getElementById('my-ads-btn');
+            myAdsBtn.addEventListener('click', () => {
+                window.location.href = '/my-ads.html'; // Предполагается, что у вас будет страница my-ads.html
             });
 
             const logoutBtn = document.getElementById('logout-btn');

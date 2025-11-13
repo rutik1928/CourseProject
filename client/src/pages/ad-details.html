@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Автомобильные объявления</title>
+    <title>Подробности объявления</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -14,7 +14,6 @@
         <a href="/register.html">Регистрация</a>
         <a href="/create-ad.html">Разместить объявление</a>
         <a href="/create-car.html">Добавить автомобиль</a>
-        <a href="/my-ads.html">Мои объявления</a>
         <a href="/moderation.html" id="sidebar-moderation-link" style="display: none;">Модерация объявлений</a>
         <a href="/cars.html">Просмотр автомобилей</a>
     </div>
@@ -22,7 +21,7 @@
     <header>
         <button id="menu-toggle" class="menu-toggle">☰</button>
         <nav>
-        <h1>Автомобильные объявления</h1>
+        <h1>Подробности объявления</h1>
         <div class="header-right">
             <div id="profile-menu" class="profile-menu">
                 <a href="/login.html" id="login-link" class="profile-link">Войти</a>
@@ -31,22 +30,26 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <section class="hero-section">
-            <h2>Найдите свой идеальный автомобиль!</h2>
-            <p>Тысячи объявлений о продаже автомобилей от частных лиц и дилеров.</p>
-            <p>Легко и быстро продавайте свой автомобиль.</p>
-        </section>
+    </header>
 
-        <h2>Последние объявления</h2>
-        <div class="ad-listings">
-            <!-- Здесь будут динамически загружаться объявления -->
+    <div class="container">
+        <div id="ad-details-container">
+            <div class="ad-image-placeholder"></div>
+            <h2 id="ad-title"></h2>
+            <p id="ad-creation-date" class="text-muted"></p>
+            <h3 id="car-make-model-generation"></h3>
+            <p id="car-year"></p>
+            <div id="ad-details-content">
+                <!-- Остальные показатели будут здесь -->
+            </div>
         </div>
     </div>
+
     <footer>
         <p>&copy; 2025 Автомобильные объявления. Все права защищены.</p>
     </footer>
-    <script src="/js/index.js"></script>
+
     <script src="/js/common.js"></script>
- </body>
+    <script src="/js/ad-details.js"></script>
+</body>
 </html>
